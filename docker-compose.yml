@@ -1,0 +1,17 @@
+services:
+  concept-erasure:
+    build: .
+    container_name: concept-erasure
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./:/workspace
+      - ./hf-cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    shm_size: "8gb"

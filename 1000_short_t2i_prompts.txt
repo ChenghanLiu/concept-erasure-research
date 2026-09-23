@@ -1,0 +1,20 @@
+a photo of {}
+a portrait of {}
+a close-up photo of {}
+a professional photo of {}
+a high quality photo of {}
+a realistic photo of {}
+a detailed photo of {}
+an image of {}
+a picture of {}
+a photograph of {}
+a studio portrait of {}
+a candid photo of {}
+a cinematic photo of {}
+a sharp photo of {}
+a high resolution photo of {}
+a headshot of {}
+a profile photo of {}
+a frontal portrait of {}
+a realistic portrait of {}
+a detailed portrait of {}

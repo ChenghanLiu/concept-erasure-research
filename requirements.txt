@@ -1,0 +1,12 @@
+diffusers
+transformers
+accelerate
+safetensors
+scipy
+scikit-learn
+pandas
+matplotlib
+pillow
+tqdm
+jupyterlab
+ipywidgets

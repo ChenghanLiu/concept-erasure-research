@@ -1,0 +1,9 @@
+hf-cache/
+outputs/
+temp_folder/
+.ipynb_checkpoints/
+.idea/
+.Trash-0/
+__pycache__/
+*.pyc
+.~*
