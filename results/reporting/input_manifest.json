@@ -1,0 +1,117 @@
+{
+  "format_version": 1,
+  "source_commit": "41763a5bcfa38065f85c61b2bceb3dd24e1b21f7",
+  "description": "Only the committed inputs consumed by frozen reporting calculations and the preserved inventory.",
+  "verification": "SHA-256 of committed Git blob content; text inputs permit CRLF-to-LF checkout conversion only; binary inputs are exact. No Git executable is required at runtime.",
+  "historical_inventory_hashes": "Optional historical_inventory_sha256 values preserve the original data_inventory.csv metadata. They describe historical working-tree bytes and are never used to verify current inputs.",
+  "files": {
+    "experiments/adaptive_rank_experiment.ipynb": {
+      "content": "text_lf",
+      "committed_sha256": "6e0a7f1b98ba80bdf7a679c9626e2423bd5831fa0dc651964a952b41eb0dadde",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/final_test_results.csv": {
+      "content": "text_lf",
+      "committed_sha256": "281d1b42d3246b6d47654caedef7414214be68d3b82d81864c5584754a8586dc",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/pilot_results.csv": {
+      "content": "text_lf",
+      "committed_sha256": "1482080e9575c347f3dc597da87cb4531ea16b54fa9011c5aa616fa1e1a266e5",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/runs/car-gpu-parity-20260925/checkpoint/calibration_results.csv": {
+      "content": "text_lf",
+      "committed_sha256": "a10ad7fc73346feb28b78d24b4b015515e46d0514da0f6940c805b2a0b366577",
+      "purpose": "archived inventory evidence; excluded from scientific aggregates",
+      "historical_inventory_sha256": "b0a75858c98804f25cddf60165b6485195df0faa4970221a5117611de3f0fbce"
+    },
+    "results/runs/car-gpu-parity-20260925/checkpoint/manifest.json": {
+      "content": "text_lf",
+      "committed_sha256": "e8ea48456dabedfce909eb24f7c14f4fe25846e02a6a5be2e09ac2f5461baf5f",
+      "purpose": "archived inventory evidence; excluded from scientific aggregates"
+    },
+    "results/runs/car-gpu-parity-20260925/report.json": {
+      "content": "text_lf",
+      "committed_sha256": "51da1a0894a87502969c65c2a6fcdae6df7d65303eeef3f2596a38fe1639673f",
+      "purpose": "archived inventory evidence; excluded from scientific aggregates"
+    },
+    "results/runs/car-gpu-parity-20260925/resume_report.json": {
+      "content": "text_lf",
+      "committed_sha256": "a644f00c9675fb8f66037d7f21bc1030e4f79bc41386c38dc465c1305dfdc5f7",
+      "purpose": "archived inventory evidence; excluded from scientific aggregates"
+    },
+    "results/runs/car-gpu-parity-20260925/resume.log": {
+      "content": "text_lf",
+      "committed_sha256": "c4db3afd1375cec18bddb00cf674fedf37c04f4596955e92b997a180f1a41110",
+      "purpose": "archived inventory evidence; excluded from scientific aggregates",
+      "historical_inventory_sha256": "51da906f51964733157812b613d71c8878cbcb5f8a472bac56f14cd763b759b1"
+    },
+    "results/runs/car-gpu-parity-20260925/run.log": {
+      "content": "text_lf",
+      "committed_sha256": "e082ef71f5b58bf46db043a256bcf4af2629e37c539348191b33c96630f68788",
+      "purpose": "archived inventory evidence; excluded from scientific aggregates",
+      "historical_inventory_sha256": "60186d4c0b003c23ce0e7bad7e2482ace5385d899411e8f00e45ea06c6cb0019"
+    },
+    "results/runs/car-gpu-parity-20260925/smoke_test.py": {
+      "content": "text_lf",
+      "committed_sha256": "f5b852206bd604c11120c735b28336b33ec24bc94afeeaa24f06da5eee02bad1",
+      "purpose": "archived inventory evidence; excluded from scientific aggregates"
+    },
+    "results/runs/car-gpu-parity-20260925/validation.json": {
+      "content": "text_lf",
+      "committed_sha256": "b16d2a65a76998924930dd1d75dfeda1d472d12e9a817a64dc6a68c4062f4058",
+      "purpose": "archived inventory evidence; excluded from scientific aggregates"
+    },
+    "results/selected_ranks.csv": {
+      "content": "text_lf",
+      "committed_sha256": "96c6160c6c23fa51d134f52c86efe9387a6dcb127a6c60d7d85b05bb77078a74",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/spectrum_summary.csv": {
+      "content": "text_lf",
+      "committed_sha256": "b76f6bf015936c4dca8e3d5a10e36cf4600c50aa76e3258bd9775593b4d2d01a",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/subspaces/airplane.pt": {
+      "content": "binary",
+      "committed_sha256": "dc28989a90f59ffb226a5f7063469e3a280756fc9c7fcace2fa97d8c28cbbccf",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/subspaces/car.pt": {
+      "content": "binary",
+      "committed_sha256": "4f75060b6186eb44709537c1e63158e47b5e4ea3b4f1a91d494a44c5f81add53",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/subspaces/cat.pt": {
+      "content": "binary",
+      "committed_sha256": "615d3ea08d9069204e75794239914e82f8eef0ae1b365a2a86780210c4c4e50b",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/subspaces/claude_monet.pt": {
+      "content": "binary",
+      "committed_sha256": "adb2b39d552b30d847d84445387b26163822c0b22f2bfddc16185375d7e92d28",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/subspaces/dog.pt": {
+      "content": "binary",
+      "committed_sha256": "fcf8b6ccc2f321b2c62a6d342a7d8da41e9d061abbb4a541bca36627568fed55",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/subspaces/taylor_swift.pt": {
+      "content": "binary",
+      "committed_sha256": "5d15fbfe0335f6003c7a2bb2c69f2c833774cd7dd6de13e54198212b61594aee",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/subspaces/vincent_van_gogh.pt": {
+      "content": "binary",
+      "committed_sha256": "9190503b41d68c1903524b5210eaa2f676160868fd6faa5ae934af1ba265f71c",
+      "purpose": "frozen scientific evidence"
+    },
+    "results/van_gogh_preservation.csv": {
+      "content": "text_lf",
+      "committed_sha256": "488cdbbb9ad560fed9bacde1385f23193af9a11ab57ba7b6013932fbab664465",
+      "purpose": "frozen scientific evidence"
+    }
+  }
+}

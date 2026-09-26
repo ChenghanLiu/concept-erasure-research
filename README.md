@@ -56,21 +56,37 @@ protocols for all seven concepts.
 
 ## Setup
 
-Run commands from this repository root. The existing Docker environment is the
-recommended reproduction environment: its base image supplies PyTorch
+Clone into a directory of your choice, then run commands from the clone root.
+The Docker environment is the recommended reproduction environment: its base image supplies PyTorch
 `2.5.1` with CUDA `12.4` and installs `requirements.txt`.
 An NVIDIA GPU and NVIDIA-compatible Docker GPU support are required for inference.
+Offline checks and reporting need only a CPU.
+
+Windows PowerShell:
+
+```powershell
+git clone https://github.com/ChenghanLiu/concept-erasure-research.git
+Set-Location concept-erasure-research
+```
+
+Linux shell:
+
+```bash
+git clone https://github.com/ChenghanLiu/concept-erasure-research.git
+cd concept-erasure-research
+```
 
 For a local Python environment, use Python 3.11, install a CUDA-compatible
 PyTorch build, then install the existing requirements:
 
 ```powershell
-cd D:\Projects\concept-erasure
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 python run_experiment.py --help
 ```
+
+On Linux, replace the activation command with `source .venv/bin/activate`.
 
 `requirements.txt` does not install PyTorch; install it in that environment
 before running the experiments. Model access and enough GPU memory for SD1.4
@@ -79,11 +95,17 @@ use. The runner defaults `HF_HOME` to the repository's `hf-cache/` if it is unse
 existing Hugging Face environment settings are honored. It does not clear proxy
 settings or force the notebook's optional Hugging Face mirror.
 
-The existing dependencies are unpinned. The working container used for the
-refactor checks had Python 3.11.10, torch 2.5.1+cu124, diffusers 0.40.0, and
-transformers 5.16.1. Each new run records its installed versions and input/code
-hashes in `manifest.json`. Historical caches do not contain model revisions or
-extraction provenance, so bitwise equality across environments is not asserted.
+The existing dependencies are unpinned. The
+[tested environment record](results/reporting/reproducibility_environment.json)
+publishes the successful clean-clone audit's full installed package versions,
+Docker base digest, GPU details, and observed SD1.4/CLIP revisions. These were
+verified during that audit, not pinned retroactively for historical experiments.
+The record is an environment inventory, not a cross-platform installation lock;
+future unpinned builds may differ. Each new run records installed versions and
+input/code hashes in `manifest.json`. Historical caches lack complete model
+revision and extraction provenance. The audited base image also has an inherited
+Ninja metadata warning in `pip check`; execution and all nine regression tests
+passed without replacing that package.
 
 ## Docker usage
 
@@ -183,6 +205,7 @@ new run for reproduction; the original CSVs remain available for comparison.
 | `results/van_gogh_preservation.csv` | Original 36-row preservation comparison, read-only |
 | `results/spectrum_summary.csv` | Original spectral summary, read-only |
 | `results/runs/<run>/` | New reproduction outputs only |
+| `results/reporting/` | Frozen tables, narratives, figures, and CPU regeneration scripts |
 
 New run outputs are `manifest.json` and the selected phase's
 `calibration_results.csv`, `final_test_results.csv`, and/or
@@ -208,7 +231,15 @@ analysis = analyze_spectrum(embedding, "car")
 
 ### Notebook review notes
 
-The notebook contains exploratory cells and depends on execution history.
+Historical notebooks are research records, not all standalone clean-clone
+execution entry points. Use the production CLI and reporting scripts for the
+documented reproductions. `code_for_zexian.ipynb` needs the unavailable
+`clip_score_cal` helper; `sec-5_style_monet.ipynb` needs `unlearn_utils`,
+`prompt_template3.txt`, and local scratch tensors. Other notebooks depend on
+execution history, working-directory assumptions, or historical mirror settings.
+These archival limitations do not apply to the production CLI.
+
+The adaptive-rank notebook contains exploratory cells and depends on execution history.
 The refactor follows embedding/SVD cells 1–2 and 35, cache schema cell 55,
 calibration cell 45, final-test cells 52 and 56–57, and preservation cells 65–71
 (zero-based indices).
@@ -220,6 +251,34 @@ car rank 4; those exploratory choices do not replace the recorded car rank 2
 in the final experiment. The runner avoids these historical ambiguities while
 leaving every notebook and result intact.
 
+The saved `results/runs/car-gpu-parity-20260925/smoke_test.py` is also archival
+evidence: it expects an offline model cache and its original output paths. Do
+not execute it as a reusable fresh-run command or overwrite its checkpoint.
+
+## Reporting reproduction
+
+See the [reporting README](results/reporting/README.md) for inputs, provenance,
+and the complete artifact list. From the clone root, these commands work in
+PowerShell and Bash. The image build needs registry/package network access;
+the reporting commands then run offline on CPU, without an existing container
+or Hugging Face model downloads:
+
+```text
+docker build -t concept-erasure-reporting .
+docker run --rm --network none -e CUDA_VISIBLE_DEVICES= -e PYTHONDONTWRITEBYTECODE=1 --mount "type=bind,source=$PWD,target=/workspace" -w /workspace concept-erasure-reporting python -B results/reporting/generate_report.py --output-dir results/reporting/.rebuild
+docker run --rm --network none -e CUDA_VISIBLE_DEVICES= -e PYTHONDONTWRITEBYTECODE=1 --mount "type=bind,source=$PWD,target=/workspace" -w /workspace concept-erasure-reporting python -B results/reporting/generate_figures.py --tables-dir results/reporting/.rebuild --output-dir results/reporting/.rebuild/figures
+docker run --rm --network none -e CUDA_VISIBLE_DEVICES= -e PYTHONDONTWRITEBYTECODE=1 --mount "type=bind,source=$PWD,target=/workspace" -w /workspace concept-erasure-reporting python -B results/reporting/validate_reporting.py
+```
+
+The two builder commands rebuild all 20 generated tables, narratives, evidence,
+inventory, and figure files into `.rebuild/`. The validator independently
+rebuilds and compares them with the delivered artifacts and prints fresh JSON
+to stdout. It leaves the historical `validation_report.json` unchanged.
+Use a new output directory if a prior rebuild differs; builders refuse to
+overwrite nonidentical artifacts. The explicit portable input manifest ignores
+new run/audit files. `source_snapshot.json` remains archival evidence and is
+not a regeneration prerequisite.
+
 ## Verification
 
 Run syntax, import, and offline parity checks in the configured environment:
@@ -228,6 +287,7 @@ Run syntax, import, and offline parity checks in the configured environment:
 python -m compileall -q src run_experiment.py
 python -c "import src.embedding, src.projection, src.generation, src.evaluation, src.rank_selector; import run_experiment"
 python -m src.checks
+python -B results/reporting/test_reporting_inputs.py
 ```
 
 The checks load the existing small subspace caches and compare generation,

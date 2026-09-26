@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import ast
 import csv
-import hashlib
 import json
 import math
 import os
@@ -14,15 +13,13 @@ import subprocess
 import sys
 import tempfile
 
+from reporting_inputs import inventory_digest, text_bytes, verify_inputs
+
 os.environ["CUDA_VISIBLE_DEVICES"] = ""
 os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-
-
-def checksum(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def assert_close(actual, expected, tolerance=1e-12):
@@ -35,8 +32,7 @@ def main():
     from PIL import Image
 
     assert not torch.cuda.is_initialized()
-    snapshot = json.loads((HERE / "source_snapshot.json").read_text())["files"]
-    assert all(checksum(ROOT / path) == expected for path, expected in snapshot.items())
+    inputs = verify_inputs()
     final = pd.read_csv(ROOT / "results/final_test_results.csv", float_precision="round_trip")
     assert len(final) == 70 and not final.duplicated(["concept", "method", "seed"]).any()
     source_summary = final.groupby(["concept", "method"]).clip_score.agg(["mean", "std", "count"])
@@ -76,7 +72,7 @@ def main():
         for threshold, value in cached["threshold_ranks"].items():
             assert row[f"rank_{int(threshold * 100)}"] == value
         numeric_checks += 5
-    notebook = json.loads((ROOT / "experiments/adaptive_rank_experiment.ipynb").read_text())
+    notebook = json.loads((ROOT / "experiments/adaptive_rank_experiment.ipynb").read_text(encoding="utf-8"))
     # Cross-check against a DIFFERENT saved location: literal tradeoff_data in
     # cell82, rather than the cell77/81 printed tables used by the builder.
     source_tree = ast.parse("".join(notebook["cells"][82]["source"]))
@@ -111,16 +107,17 @@ def main():
         saved = dict((int(b), int(r)) for b, r in re.findall(r"Preservation budget (\d+)% -> selected rank = (\d+)", block))
         assert row.selected_rank == saved[row.budget_pct]
         numeric_checks += 1
-    evidence = json.loads((HERE / "notebook_evidence.json").read_text())
+    evidence = json.loads((HERE / "notebook_evidence.json").read_text(encoding="utf-8"))
     source95 = "".join("".join(o.get("text", [])) for o in notebook["cells"][95]["outputs"])
     assert_close(evidence["car_rank4_test"]["mean"], float(re.search(r"(?m)^Mean:\s*([0-9.]+)", source95)[1]))
     assert_close(evidence["car_rank4_test"]["std"], float(re.search(r"(?m)^Std:\s*([0-9.]+)", source95)[1]))
     assert evidence["car_rank4_test"]["mean"] > main_table.loc["car", "fixed_target_clip_mean"]
     numeric_checks += 2
     inventory = pd.read_csv(HERE / "data_inventory.csv").fillna("")
-    files_in_results = {p.relative_to(ROOT).as_posix() for p in (ROOT / "results").rglob("*")
-                        if p.is_file() and not p.is_relative_to(HERE)}
-    assert files_in_results <= set(inventory.source_file)
+    files_in_results = {relative for relative in inputs if relative.startswith("results/")}
+    assert set(inventory.source_file) == set(inputs)
+    for row in inventory.itertuples():
+        assert row.sha256 == inventory_digest(inputs[row.source_file])
     assert not (inventory.partition == "unclassified").any()
     image_metadata = []
     for path in sorted((HERE / "figures").glob("*.png")):
@@ -140,29 +137,29 @@ def main():
         for path in sorted(temporary.rglob("*")):
             if path.is_file():
                 relative = path.relative_to(temporary)
-                assert path.read_bytes() == (HERE / relative).read_bytes(), relative
+                original = (HERE / relative).read_bytes()
+                # Git may convert text checkouts to CRLF. PNGs remain byte-exact.
+                if path.suffix in (".csv", ".md", ".json"):
+                    original = text_bytes(original)
+                assert path.read_bytes() == original, relative
                 rebuilt.append(relative.as_posix())
     assert len(rebuilt) == 20
     assert not torch.cuda.is_initialized()
-    assert all(checksum(ROOT / path) == expected for path, expected in snapshot.items())
+    assert verify_inputs() == inputs
     for path in HERE.glob("*.py"):
-        tree = ast.parse(path.read_text())
+        tree = ast.parse(path.read_text(encoding="utf-8"))
         imports = [n.module or "" for n in ast.walk(tree) if isinstance(n, ast.ImportFrom)]
         imports += [alias.name for n in ast.walk(tree) if isinstance(n, ast.Import) for alias in n.names]
         assert not any(name.startswith(("diffusers", "transformers", "src.generation", "src.evaluation")) for name in imports)
     report = dict(status="PASS", independent_numeric_checks=numeric_checks,
-        protected_files_unchanged=len(snapshot), main_source_rows=70, style_rows=8,
+        committed_inputs_verified=len(inputs), main_source_rows=70, style_rows=8,
         budget_rows=6, existing_result_artifacts_inventoried=len(files_in_results),
         rebuilt_artifacts_identical=rebuilt, figures=image_metadata,
         cuda_visible_devices=os.environ["CUDA_VISIBLE_DEVICES"], cuda_initialized=False,
         gpu_experiments_launched=0, notebook_cells_executed=0,
         precision_note="Monet rounded aggregates checked at saved precision; no unavailable digits reconstructed")
-    output = HERE / "validation_report.json"
-    text = json.dumps(report, indent=2, sort_keys=True) + "\n"
-    if output.exists():
-        assert output.read_text() == text
-    else:
-        output.write_text(text, encoding="utf-8")
+    # validation_report.json is the original local audit record, not a template
+    # to overwrite with today's verification of the portable input manifest.
     print(json.dumps(report, indent=2))
 
 

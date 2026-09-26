@@ -9,7 +9,6 @@ from __future__ import annotations
 import argparse
 import ast
 import csv
-import hashlib
 import io
 import json
 import math
@@ -18,6 +17,8 @@ from pathlib import Path
 import re
 import statistics as stats
 import sys
+
+from reporting_inputs import inventory_digest, text_bytes, verify_inputs
 
 os.environ["CUDA_VISIBLE_DEVICES"] = ""
 sys.dont_write_bytecode = True
@@ -31,10 +32,6 @@ SEEDS = (3025, 3026, 3027, 3028, 3029)
 SELECTED = dict(zip(CONCEPTS, (2, 4, 4, 2, 1, 1, 2)))
 
 
-def digest(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
 def output_directory(value):
     path = Path(value).resolve()
     if not path.is_relative_to(REPORTING.resolve()):
@@ -46,7 +43,7 @@ def output_directory(value):
 def write(path, text):
     content = text.encode("utf-8")
     if path.exists():
-        if path.read_bytes() != content:
+        if text_bytes(path.read_bytes()) != content:
             raise FileExistsError(f"Refusing to overwrite nonidentical artifact: {path}")
     else:
         with path.open("xb") as handle:
@@ -64,14 +61,6 @@ def write_csv(path, rows):
 def read_csv(relative):
     with (ROOT / relative).open(newline="", encoding="utf-8-sig") as handle:
         return list(csv.DictReader(handle))
-
-
-def verify_frozen_inputs():
-    snapshot = json.loads((REPORTING / "source_snapshot.json").read_text())
-    for path, expected in snapshot["files"].items():
-        if digest(ROOT / path) != expected:
-            raise ValueError(f"Frozen source changed since the reporting audit: {path}")
-    return len(snapshot["files"])
 
 
 def table(headers, rows):
@@ -258,7 +247,7 @@ def build_spectra():
     return rows, caches
 
 
-def inventory(caches):
+def inventory(caches, inputs):
     rows = []
     specifications = {
         "final_test_results.csv": ("main rank comparison", "held-out final test", "; ".join(CONCEPTS), "1; 2; 4", "3025-3029", "target CLIP residual", 70, "sample rows", "Primary main/aggregate source; rank-one adaptive rows reuse baseline"),
@@ -267,10 +256,10 @@ def inventory(caches):
         "spectrum_summary.csv": ("uncentered activation SVD", "spectrum", "Taylor Swift; Vincent van Gogh; car; dog", "energy thresholds70/80/90/95%", "not applicable", "PC1 energy; cumulative-energy ranks", 4, "concept records", "Supplement absent concepts from cached spectrum metadata; do not recompute SVD"),
         "van_gogh_preservation.csv": ("original vs projected preservation", "preservation", "Vincent van Gogh", "original; 1; 4", "4025-4027", "preservation CLIP", 36, "prompt-seed-method rows", "Four prompts x three seeds x three methods; full precision"),
     }
-    for path in sorted((ROOT / "results").rglob("*")):
-        if not path.is_file() or path.is_relative_to(REPORTING):
+    for relative, entry in sorted(inputs.items()):
+        if not relative.startswith("results/"):
             continue
-        relative = path.relative_to(ROOT).as_posix()
+        path = ROOT / relative
         if path.name in specifications and path.parent == ROOT / "results":
             spec = specifications[path.name]
             assert len(read_csv(relative)) == spec[6]
@@ -286,10 +275,10 @@ def inventory(caches):
                     "sample rows" if path.suffix == ".csv" else "metadata object" if path.suffix == ".json" else "not a data table",
                     "Existing smoke test duplicate; read only, never rerun or added to research sample counts")
         else:
-            spec = ("unclassified artifact", "unclassified", "", "", "", "", "", "unknown", "Not used; requires explicit source review")
+            raise ValueError(f"Unclassified frozen reporting input: {relative}")
         rows.append(dict(source_file=relative, source_locator="whole file", experiment_type=spec[0], partition=spec[1],
             concepts=spec[2], ranks=spec[3], seeds=spec[4], metrics=spec[5], row_count=spec[6], row_unit=spec[7],
-            notes=spec[8], sha256=digest(path)))
+            notes=spec[8], sha256=inventory_digest(entry)))
     for cells, concepts, kind, ranks, seeds, count, unit, notes in (
         ("50;51", "Vincent van Gogh; Claude Monet", "calibration summary", "1;2;4;8", "2025-2027", 8, "rank means", "Six-decimal saved means; no complete full-precision calibration CSV"),
         ("75", "Vincent van Gogh", "preservation", "2;8", "4025-4027", 24, "printed sample rows", "Six-decimal samples; prefer full-precision aggregate means in cell76"),
@@ -304,19 +293,19 @@ def inventory(caches):
     ):
         rows.append(dict(source_file=NOTEBOOK, source_locator=f"zero-based cells {cells}", experiment_type=kind,
             partition=kind, concepts=concepts, ranks=ranks, seeds=seeds, metrics="CLIP cosine / selection",
-            row_count=count, row_unit=unit, notes=notes, sha256=digest(ROOT / NOTEBOOK)))
+            row_count=count, row_unit=unit, notes=notes, sha256=inventory_digest(inputs[NOTEBOOK])))
     return rows
 
 
 def build(output_dir):
+    inputs = verify_inputs()
     out = output_directory(output_dir)
-    protected_count = verify_frozen_inputs()
     main_rows, aggregate_rows = build_main()
     style_rows, budget_rows, evidence = build_notebook_evidence()
     rank_rows, caches = build_spectra()
     for name, rows in (("main_results", main_rows), ("aggregate_results", aggregate_rows),
                        ("rank_selection", rank_rows), ("style_tradeoff", style_rows),
-                       ("preservation_budget_sensitivity", budget_rows), ("data_inventory", inventory(caches))):
+                       ("preservation_budget_sensitivity", budget_rows), ("data_inventory", inventory(caches, inputs))):
         write_csv(out / f"{name}.csv", rows)
     write(out / "notebook_evidence.json", json.dumps(evidence, indent=2, sort_keys=True) + "\n")
     write(out / "main_results.md", "# Held-out target CLIP residual\n\nLower is better. Mean ± sample SD (ddof=1), five paired test seeds 3025–3029 per concept and method.\n\n" +
@@ -350,9 +339,9 @@ def build(output_dir):
     from report_narratives import render_narratives
     for name, text in render_narratives(main_rows, aggregate_rows, style_rows, budget_rows, evidence).items():
         write(out / name, text)
-    assert verify_frozen_inputs() == protected_count
+    assert verify_inputs() == inputs
     print(json.dumps({"tables": 6, "main_rows": len(main_rows), "style_rows": len(style_rows),
-        "budget_rows": len(budget_rows), "protected_files_unchanged": protected_count,
+        "budget_rows": len(budget_rows), "committed_inputs_verified": len(inputs),
         "gpu_experiments_launched": 0, "output_dir": str(out)}, indent=2))
 
 
