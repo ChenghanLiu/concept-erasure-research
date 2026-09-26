@@ -1,0 +1,74 @@
+
+Loading weights:   0%|          | 0/590 [00:00<?, ?it/s]
+Loading weights:   2%|▏         | 14/590 [00:00<00:04, 134.05it/s]
+Loading weights:   5%|▍         | 28/590 [00:00<00:04, 124.72it/s]
+Loading weights:   9%|▉         | 55/590 [00:00<00:02, 181.24it/s]
+Loading weights:  13%|█▎        | 74/590 [00:00<00:03, 163.25it/s]
+Loading weights:  16%|█▋        | 97/590 [00:00<00:02, 168.97it/s]
+Loading weights:  20%|█▉        | 116/590 [00:00<00:02, 166.12it/s]
+Loading weights:  23%|██▎       | 133/590 [00:00<00:02, 155.68it/s]
+Loading weights:  26%|██▌       | 154/590 [00:00<00:02, 163.89it/s]
+Loading weights:  29%|██▉       | 171/590 [00:01<00:02, 141.51it/s]
+Loading weights:  32%|███▏      | 186/590 [00:01<00:03, 133.30it/s]
+Loading weights:  34%|███▍      | 202/590 [00:01<00:02, 134.85it/s]
+Loading weights:  38%|███▊      | 226/590 [00:01<00:02, 159.12it/s]
+Loading weights:  41%|████      | 243/590 [00:01<00:02, 156.03it/s]
+Loading weights:  44%|████▍     | 259/590 [00:01<00:02, 152.10it/s]
+Loading weights:  47%|████▋     | 275/590 [00:01<00:02, 146.59it/s]
+Loading weights:  49%|████▉     | 290/590 [00:01<00:02, 145.17it/s]
+Loading weights: 100%|██████████| 590/590 [00:01<00:00, 296.02it/s]
+/opt/conda/lib/python3.11/site-packages/diffusers/utils/deprecation_utils.py:23: FutureWarning: `torch_dtype` is deprecated and will be removed in version 1.0.0. Please use `dtype` instead.
+  deprecate("torch_dtype", "1.0.0", _TORCH_DTYPE_DEPRECATION_MESSAGE)
+Couldn't connect to the Hub: Cannot reach https://huggingface.co/api/models/CompVis/stable-diffusion-v1-4: offline mode is enabled. To disable it, please unset the `HF_HUB_OFFLINE` environment variable..
+Will try to load from local cache.
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]
+Loading pipeline components...:  33%|███▎      | 2/6 [00:04<00:09,  2.40s/it]
+
+Loading weights:   0%|          | 0/196 [00:00<?, ?it/s][A
+
+Loading weights:   1%|          | 2/196 [00:08<13:24,  4.15s/it][A
+
+Loading weights:  66%|██████▋   | 130/196 [00:08<00:03, 21.66it/s][A
+
+Loading weights:  89%|████████▉ | 175/196 [00:09<00:00, 25.87it/s][A
+Loading weights: 100%|██████████| 196/196 [00:09<00:00, 20.18it/s]
+
+Loading pipeline components...:  50%|█████     | 3/6 [00:14<00:16,  5.51s/it]
+Loading pipeline components...:  83%|████████▎ | 5/6 [01:53<00:29, 29.30s/it]
+Loading pipeline components...: 100%|██████████| 6/6 [01:53<00:00, 21.15s/it]
+Loading pipeline components...: 100%|██████████| 6/6 [01:53<00:00, 18.90s/it]
+You have disabled the safety checker for <class 'diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion.StableDiffusionPipeline'> by passing `safety_checker=None`. Ensure that you abide to the conditions of the Stable Diffusion license and do not expose unfiltered results in services or applications open to the public. Both the diffusers team and Hugging Face strongly recommend to keep the safety filter enabled in all public facing circumstances, disabling it only for use-cases that involve analyzing network behavior or auditing its results. For more information, please have a look at https://github.com/huggingface/diffusers/pull/254 .
+calibration [1/1] {'concept': 'car', 'rank': 1, 'seed': 2025} CLIP=0.209231
+calibration: 1/1 rows complete
+{
+  "clip_score": 0.20923097431659698,
+  "reference": 0.209231,
+  "signed_difference": -2.568340301545291e-08,
+  "absolute_difference": 2.568340301545291e-08,
+  "gpu_parity": "PASS",
+  "checkpoint": {
+    "rows": 1,
+    "before_sha256": "07ac358bdd33fe0173f1d0b3257ee3d84720ddc9b455ea4e7fcda2cce57fbae4",
+    "after_sha256": "b0a75858c98804f25cddf60165b6485195df0faa4970221a5117611de3f0fbce",
+    "resume_unchanged": false,
+    "pipeline_load_count": 1
+  }
+}
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.11/weakref.py", line 666, in _exitfunc
+    f()
+  File "/opt/conda/lib/python3.11/weakref.py", line 590, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/tempfile.py", line 933, in _cleanup
+    cls._rmtree(name, ignore_errors=ignore_errors)
+  File "/opt/conda/lib/python3.11/tempfile.py", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "/opt/conda/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/opt/conda/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+  File "/workspace/results/runs/car-gpu-parity-20260925/smoke_test.py", line 46, in audit_writes
+    raise RuntimeError(f"Smoke test attempted a write outside results/runs: {path}")
+RuntimeError: Smoke test attempted a write outside results/runs: /workspace/_remote_module_non_scriptable.py

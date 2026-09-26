@@ -1,0 +1,113 @@
+{
+  "absolute_difference": 2.568340301545291e-08,
+  "absolute_tolerance": 1e-05,
+  "cache": {
+    "U_shape": [
+      768,
+      147
+    ],
+    "path": "results/subspaces/car.pt",
+    "recomputed": false,
+    "sha256": "4f75060b6186eb44709537c1e63158e47b5e4ea3b4f1a91d494a44c5f81add53"
+  },
+  "checkpoint": {
+    "after_sha256": "b0a75858c98804f25cddf60165b6485195df0faa4970221a5117611de3f0fbce",
+    "before_sha256": "07ac358bdd33fe0173f1d0b3257ee3d84720ddc9b455ea4e7fcda2cce57fbae4",
+    "pipeline_load_count": 1,
+    "resume_unchanged": false,
+    "rows": 1
+  },
+  "clip": {
+    "exact_scoring_match": true,
+    "frozen_function_same_image_score": 0.20923097431659698,
+    "image_processor": "CLIPImageProcessor",
+    "image_processor_config": {
+      "crop_size": {
+        "height": 224,
+        "width": 224
+      },
+      "do_center_crop": true,
+      "do_convert_rgb": true,
+      "do_normalize": true,
+      "do_rescale": true,
+      "do_resize": true,
+      "image_mean": [
+        0.48145466,
+        0.4578275,
+        0.40821073
+      ],
+      "image_processor_type": "CLIPImageProcessor",
+      "image_std": [
+        0.26862954,
+        0.26130258,
+        0.27577711
+      ],
+      "resample": 3,
+      "rescale_factor": 0.00392156862745098,
+      "size": {
+        "shortest_edge": 224
+      }
+    },
+    "model": "openai/clip-vit-large-patch14",
+    "model_dtype": "torch.float32",
+    "model_training": false,
+    "processor": "CLIPProcessor",
+    "score": 0.20923097431659698,
+    "scoring_prompt": "a photo of a car"
+  },
+  "clip_score": 0.20923097431659698,
+  "difference_from_frozen_csv": 0.0,
+  "frozen_csv_score": 0.20923097431659698,
+  "generation": {
+    "generator_passed_to_pipeline": false,
+    "images_generated": 1,
+    "latent_device": "cuda:0",
+    "latent_dtype": "torch.float16",
+    "latent_sha256": "3b0eb785b63d11227cc88f3bc6c7a3c5f66ec3d97cdb710eef866489453da80f",
+    "latent_shape": [
+      1,
+      4,
+      64,
+      64
+    ],
+    "negative_prompt_exact_match": true,
+    "notebook_latent_exact_match": true,
+    "num_inference_steps": 15,
+    "prompt": "a photo of a car",
+    "seed": 2025
+  },
+  "gpu": "NVIDIA GeForce RTX 2070 SUPER",
+  "gpu_parity": "PASS",
+  "pipeline": {
+    "class": "StableDiffusionPipeline",
+    "device": "cuda:0",
+    "dtype": "torch.float16",
+    "model": "CompVis/stable-diffusion-v1-4",
+    "safety_checker": null,
+    "scheduler": "PNDMScheduler",
+    "text_encoder_class": "CLIPTextModel"
+  },
+  "pipeline_load_count": 1,
+  "projection": {
+    "bias_unchanged": true,
+    "lambda": 4,
+    "layer_id": 0,
+    "matrix_matches_notebook": true,
+    "module": "text_encoder.encoder.layers[0].self_attn.out_proj",
+    "rank": 1,
+    "weight_matches_notebook": true
+  },
+  "reference": 0.209231,
+  "resume": false,
+  "signed_difference": -2.568340301545291e-08,
+  "write_paths": [
+    "results/runs/car-gpu-parity-20260925",
+    "results/runs/car-gpu-parity-20260925/checkpoint",
+    "results/runs/car-gpu-parity-20260925/checkpoint/.lock",
+    "results/runs/car-gpu-parity-20260925/checkpoint/calibration_results.csv",
+    "results/runs/car-gpu-parity-20260925/checkpoint/manifest.json",
+    "results/runs/car-gpu-parity-20260925/tmp/iy5w7mjt",
+    "results/runs/car-gpu-parity-20260925/tmp/tmpwiwzy5k1",
+    "results/runs/car-gpu-parity-20260925/tmp/tmpwiwzy5k1/_remote_module_non_scriptable.py"
+  ]
+}

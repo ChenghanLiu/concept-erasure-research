@@ -1,0 +1,31 @@
+{
+  "absolute_difference": 2.568340301545291e-08,
+  "absolute_tolerance": 1e-05,
+  "cache": {
+    "U_shape": [
+      768,
+      147
+    ],
+    "path": "results/subspaces/car.pt",
+    "recomputed": false,
+    "sha256": "4f75060b6186eb44709537c1e63158e47b5e4ea3b4f1a91d494a44c5f81add53"
+  },
+  "checkpoint": {
+    "after_sha256": "b0a75858c98804f25cddf60165b6485195df0faa4970221a5117611de3f0fbce",
+    "before_sha256": "b0a75858c98804f25cddf60165b6485195df0faa4970221a5117611de3f0fbce",
+    "pipeline_load_count": 0,
+    "resume_unchanged": true,
+    "rows": 1
+  },
+  "clip_score": 0.20923097431659698,
+  "difference_from_frozen_csv": 0.0,
+  "frozen_csv_score": 0.20923097431659698,
+  "gpu": "NVIDIA GeForce RTX 2070 SUPER",
+  "gpu_parity": "PASS",
+  "reference": 0.209231,
+  "resume": true,
+  "signed_difference": -2.568340301545291e-08,
+  "write_paths": [
+    "results/runs/car-gpu-parity-20260925/checkpoint/.lock"
+  ]
+}

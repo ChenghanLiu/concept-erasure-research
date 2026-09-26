@@ -1,0 +1,117 @@
+{
+  "concepts": [
+    "car"
+  ],
+  "environment": {
+    "packages": {
+      "diffusers": "0.40.0",
+      "numpy": "2.1.2",
+      "pillow": "10.2.0",
+      "safetensors": "0.8.0",
+      "torch": "2.5.1+cu124",
+      "transformers": "5.16.1"
+    },
+    "python": "3.11.10"
+  },
+  "format_version": 1,
+  "input_sha256": {
+    "1000_short_t2i_prompts.txt": "5a3c4069c549af3b419324ee6b700e0668de74b38b683a3a6403deff682464f2",
+    "results/selected_ranks.csv": "96c6160c6c23fa51d134f52c86efe9387a6dcb127a6c60d7d85b05bb77078a74",
+    "results/subspaces/car.pt": "4f75060b6186eb44709537c1e63158e47b5e4ea3b4f1a91d494a44c5f81add53"
+  },
+  "phase": "single_sample_gpu_parity",
+  "protocol": {
+    "adaptive_rank_one": "copy baseline score",
+    "calibration_seeds": [
+      2025,
+      2026,
+      2027
+    ],
+    "candidate_ranks": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "clip_model": "openai/clip-vit-large-patch14",
+    "device": "cuda",
+    "embedding_templates": 20,
+    "images_per_job": 1,
+    "inference_steps": 15,
+    "lambda": 4,
+    "latent_shape": [
+      1,
+      4,
+      64,
+      64
+    ],
+    "layer": 0,
+    "metric": "mean normalized CLIP image/text cosine similarity",
+    "model": "CompVis/stable-diffusion-v1-4",
+    "negative_prompt": "bad anatomy,watermark,extra digit,signature,worst quality,jpeg artifacts,normal quality,low quality,long neck,lowres,error,blurry,missing fingers,fewer digits,missing arms,text,cropped,Humpbacked ,bad hands,username",
+    "pipeline_dtype": "float16",
+    "preservation_prompts": [
+      "a photo of a dog",
+      "a photo of a car",
+      "a photo of an airplane",
+      "a portrait of a person"
+    ],
+    "preservation_seeds": [
+      4025,
+      4026,
+      4027
+    ],
+    "prompts": {
+      "Claude Monet": "a painting in the style of Claude Monet",
+      "Taylor Swift": "a portrait of Taylor Swift",
+      "Vincent van Gogh": "a painting in the style of Vincent van Gogh",
+      "airplane": "a photo of an airplane",
+      "car": "a photo of a car",
+      "cat": "a photo of a cat",
+      "dog": "a photo of a dog"
+    },
+    "recorded_selected_ranks": {
+      "Claude Monet": 4,
+      "Taylor Swift": 2,
+      "Vincent van Gogh": 4,
+      "airplane": 1,
+      "car": 2,
+      "cat": 2,
+      "dog": 1
+    },
+    "safety_checker": null,
+    "scheduler_and_guidance": "StableDiffusionPipeline pretrained defaults",
+    "test_seeds": [
+      3025,
+      3026,
+      3027,
+      3028,
+      3029
+    ]
+  },
+  "smoke_test": {
+    "absolute_tolerance": 1e-05,
+    "frozen_reference": 0.209231,
+    "gpu": "NVIDIA GeForce RTX 2070 SUPER",
+    "harness_sha256": "f5b852206bd604c11120c735b28336b33ec24bc94afeeaa24f06da5eee02bad1",
+    "jobs": {
+      "calibration": [
+        {
+          "concept": "car",
+          "rank": 1,
+          "seed": 2025
+        }
+      ]
+    }
+  },
+  "source_sha256": {
+    "run_experiment.py": "988c679cc0beae44566ecad68ad517e778e71f16fc6597e28034707db3513f2f",
+    "src/embedding.py": "899adcfeff30048ffaea23c4ae56f6b173718387dbdec8368c0ac75609ab0290",
+    "src/evaluation.py": "bfb9557ea895f3cb0bead529a58811dc3b25835f16761f934d38d0aa0265b761",
+    "src/generation.py": "cd19f57f59647f9ab1600e641334442297fa96084a06f575de316e746de8620f",
+    "src/projection.py": "acc295b64e4f062c8689bb59e56ec68c09196ad32fca38e45d101695eddbfb20",
+    "src/protocol.py": "6aad77f01eb05457941333154742e88b671dcf98c784c865655e62d88cd19251",
+    "src/rank_selector.py": "946d0302058d3b3c4e9f45266a3109e739c73424865089b3fbe1cc3af0207d35",
+    "src/results.py": "883f08fbfee117f46d4f533bd2f818c9a678d0fff7eb22d13d4648131a09aa68"
+  }
+}

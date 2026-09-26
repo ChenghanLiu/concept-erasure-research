@@ -1,0 +1,15 @@
+calibration: 1/1 rows complete
+{
+  "clip_score": 0.20923097431659698,
+  "reference": 0.209231,
+  "signed_difference": -2.568340301545291e-08,
+  "absolute_difference": 2.568340301545291e-08,
+  "gpu_parity": "PASS",
+  "checkpoint": {
+    "rows": 1,
+    "before_sha256": "b0a75858c98804f25cddf60165b6485195df0faa4970221a5117611de3f0fbce",
+    "after_sha256": "b0a75858c98804f25cddf60165b6485195df0faa4970221a5117611de3f0fbce",
+    "resume_unchanged": true,
+    "pipeline_load_count": 0
+  }
+}
