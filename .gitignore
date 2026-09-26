@@ -8,3 +8,4 @@ __pycache__/
 *.pyc
 .~*
 Untitled.ipynb
+results/reporting/.mplconfig/

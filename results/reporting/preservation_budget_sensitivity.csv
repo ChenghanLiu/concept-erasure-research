@@ -1,0 +1,7 @@
+concept,budget_pct,selected_rank,target_residual,preservation_score,preservation_degradation_pct,valid_ranks,target_split,source
+Vincent van Gogh,10,1,0.175338,0.21164359897375104,-1.180452,1; 2,calibration,experiments/adaptive_rank_experiment.ipynb#cell-82
+Vincent van Gogh,15,1,0.175338,0.21164359897375104,-1.180452,1; 2,calibration,experiments/adaptive_rank_experiment.ipynb#cell-82
+Vincent van Gogh,20,4,0.115241,0.17616983254750565,15.778491,1; 2; 4,calibration,experiments/adaptive_rank_experiment.ipynb#cell-82
+Claude Monet,10,1,0.155533,0.212159,-1.426951,1; 2,calibration,experiments/adaptive_rank_experiment.ipynb#cell-82
+Claude Monet,15,4,0.133511,0.178029,14.8895,1; 2; 4,calibration,experiments/adaptive_rank_experiment.ipynb#cell-82
+Claude Monet,20,4,0.133511,0.178029,14.8895,1; 2; 4,calibration,experiments/adaptive_rank_experiment.ipynb#cell-82

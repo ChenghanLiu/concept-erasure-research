@@ -1,0 +1,5 @@
+group,n_concepts,fixed_target_clip_mean,adaptive_target_clip_mean,relative_improvement_pct,concepts,source_file
+all_concepts,7,0.14535682116236004,0.12535271410431179,13.762069710993577,Taylor Swift; Vincent van Gogh; Claude Monet; car; airplane; dog; cat,results/final_test_results.csv
+changed_rank,5,0.1573043355345726,0.12929858565330504,17.803546091781055,Taylor Swift; Vincent van Gogh; Claude Monet; car; cat,results/final_test_results.csv
+style,2,0.19561834931373595,0.12770955339074136,34.71494170216177,Vincent van Gogh; Claude Monet,results/final_test_results.csv
+non_style,5,0.12525220990180969,0.12440997838973998,0.6724284647192769,Taylor Swift; car; airplane; dog; cat,results/final_test_results.csv

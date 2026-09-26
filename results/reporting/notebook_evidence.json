@@ -1,0 +1,112 @@
+{
+  "baseline_preservation": 0.2091743958493074,
+  "car_calibration": [
+    {
+      "precision": "full precision CSV",
+      "rank": 1,
+      "source": "results/pilot_results.csv",
+      "target_clip_mean": 0.14431390662988028,
+      "target_clip_std": 0.05711907578340595
+    },
+    {
+      "precision": "full precision CSV",
+      "rank": 2,
+      "source": "results/pilot_results.csv",
+      "target_clip_mean": 0.11734760304292043,
+      "target_clip_std": 0.013524405567125496
+    },
+    {
+      "precision": "full precision CSV",
+      "rank": 4,
+      "source": "results/pilot_results.csv",
+      "target_clip_mean": 0.14169859141111374,
+      "target_clip_std": 0.027585042064259872
+    },
+    {
+      "precision": "approximate; recovered six decimal samples",
+      "rank": 8,
+      "source": "experiments/adaptive_rank_experiment.ipynb#cell-92",
+      "target_clip_mean": 0.15710566666666667,
+      "target_clip_std": 0.02480961507829844
+    }
+  ],
+  "car_rank4_saved_summary": "Car rank=4 test:\n   seed     score\n0  3025  0.102531\n1  3026  0.125120\n2  3027  0.144323\n3  3028  0.133227\n4  3029  0.126705\n\nMean: 0.126381017267704\nStd: 0.015324158214602928\n",
+  "car_rank4_test": {
+    "mean": 0.126381017267704,
+    "seeds": [
+      3025,
+      3026,
+      3027,
+      3028,
+      3029
+    ],
+    "source": "experiments/adaptive_rank_experiment.ipynb#cell-95",
+    "std": 0.015324158214602928
+  },
+  "car_rank8_recovered_samples": [
+    {
+      "clip_score": 0.173842,
+      "concept": "car",
+      "rank": 8,
+      "seed": 2025
+    },
+    {
+      "clip_score": 0.128602,
+      "concept": "car",
+      "rank": 8,
+      "seed": 2026
+    },
+    {
+      "clip_score": 0.168873,
+      "concept": "car",
+      "rank": 8,
+      "seed": 2027
+    }
+  ],
+  "car_tradeoff": [
+    {
+      "preservation_degradation_pct": 16.178046,
+      "preservation_score": 0.175334,
+      "rank": 1,
+      "target_residual": 0.144314
+    },
+    {
+      "preservation_degradation_pct": 33.877848,
+      "preservation_score": 0.138311,
+      "rank": 2,
+      "target_residual": 0.117348
+    },
+    {
+      "preservation_degradation_pct": 14.789276,
+      "preservation_score": 0.178239,
+      "rank": 4,
+      "target_residual": 0.141699
+    },
+    {
+      "preservation_degradation_pct": 25.720404,
+      "preservation_score": 0.155374,
+      "rank": 8,
+      "target_residual": 0.157106
+    }
+  ],
+  "cell_index_convention": "zero-based",
+  "notebook_source": "experiments/adaptive_rank_experiment.ipynb",
+  "printed_preservation_observation_counts": {
+    "75": 24,
+    "79": 48,
+    "87": 48
+  },
+  "saved_output_excerpts": {
+    "50": "\n===== Adaptive Rank Selection: Vincent van Gogh =====\nTesting rank=1, seed=2025...\nTesting rank=1, seed=2026...\nTesting rank=1, seed=2027...\nTesting rank=2, seed=2025...\nTesting rank=2, seed=2026...\nTesting rank=2, seed=2027...\nTesting rank=4, seed=2025...\nTesting rank=4, seed=2026...\nTesting rank=4, seed=2027...\nTesting rank=8, seed=2025...\nTesting rank=8, seed=2026...\nTesting rank=8, seed=2027...\n\n===== Calibration Summary =====\n   rank      mean       std\n0     1  0.175338  0.012401\n1     2  0.191937  0.036440\n2     4  0.115241  0.026965\n3     8  0.137270  0.019566\n\nSelected rank for Vincent van Gogh: 4\n",
+    "51": "\n===== Adaptive Rank Selection: Claude Monet =====\nTesting rank=1, seed=2025...\nTesting rank=1, seed=2026...\nTesting rank=1, seed=2027...\nTesting rank=2, seed=2025...\nTesting rank=2, seed=2026...\nTesting rank=2, seed=2027...\nTesting rank=4, seed=2025...\nTesting rank=4, seed=2026...\nTesting rank=4, seed=2027...\nTesting rank=8, seed=2025...\nTesting rank=8, seed=2026...\nTesting rank=8, seed=2027...\n\n===== Calibration Summary =====\n   rank      mean       std\n0     1  0.155533  0.006911\n1     2  0.158137  0.009264\n2     4  0.133511  0.012585\n3     8  0.164403  0.015026\n\nSelected rank for Claude Monet: 4\n",
+    "76": "Original preservation: 0.20917439584930733\nRank 1 preservation: 0.21164359897375104\nRank 2 preservation: 0.217646773904562\nRank 4 preservation: 0.17616983254750565\nRank 8 preservation: 0.13249032075206438\n",
+    "77": "   rank  target_residual  preservation  preservation_drop_pct\n0     1         0.175338      0.211644              -1.180452\n1     2         0.191937      0.217647              -4.050390\n2     4         0.115241      0.176170              15.778491\n3     8         0.137270      0.132490              36.660355\n",
+    "80": "Rank 1 preservation: 0.212159\nRank 2 preservation: 0.211344\nRank 4 preservation: 0.178029\nRank 8 preservation: 0.155615\n",
+    "81": "   rank  target_residual  preservation  preservation_drop_pct\n0     1         0.155533      0.212159              -1.426951\n1     2         0.158137      0.211344              -1.037359\n2     4         0.133511      0.178029              14.889500\n3     8         0.164403      0.155615              25.605185\n",
+    "82": "\n===== Vincent van Gogh =====\nPreservation budget 10% -> selected rank = 1\nPreservation budget 15% -> selected rank = 1\nPreservation budget 20% -> selected rank = 4\n\n===== Claude Monet =====\nPreservation budget 10% -> selected rank = 1\nPreservation budget 15% -> selected rank = 4\nPreservation budget 20% -> selected rank = 4\n",
+    "88": "Original preservation: 0.20917439584930733\nRank 1 preservation: 0.175334\nRank 2 preservation: 0.138311\nRank 4 preservation: 0.178239\nRank 8 preservation: 0.155374\n",
+    "92": "          mean       std\nrank                    \n1     0.144314  0.057119\n2     0.117348  0.013524\n4     0.141699  0.027585\n8     0.157106  0.024810\n",
+    "93": "   rank  target_residual  preservation  preservation_drop_pct\n0     1         0.144314      0.175334              16.178046\n1     2         0.117348      0.138311              33.877848\n2     4         0.141699      0.178239              14.789276\n3     8         0.157106      0.155374              25.720404\n",
+    "94": "===== Preservation-Aware Rank Selection =====\nPreservation budget: 20.0%\n\nAll candidates:\n   rank  target_residual  effective_preservation_drop\n0     1         0.144314                    16.178046\n1     2         0.117348                    33.877848\n2     4         0.141699                    14.789276\n3     8         0.157106                    25.720404\n\nValid candidates:\n   rank  target_residual  effective_preservation_drop\n0     1         0.144314                    16.178046\n2     4         0.141699                    14.789276\n\nSelected rank: 4\nTarget residual: 0.141699\nPreservation drop: 14.79%\n"
+  }
+}

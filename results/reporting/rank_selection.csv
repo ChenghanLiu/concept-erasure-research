@@ -1,0 +1,8 @@
+concept,category,selected_rank,pc1_energy,rank_70,rank_80,rank_90,rank_95,available_singular_values,spectrum_source,selection_source
+Taylor Swift,Identity,2,0.2847813069820404,10,16,25,31,167,results/spectrum_summary.csv,results/selected_ranks.csv
+Vincent van Gogh,Style,4,0.28716298937797546,7,14,23,30,187,results/spectrum_summary.csv,results/selected_ranks.csv
+Claude Monet,Style,4,0.3023248612880707,7,14,23,29,167,results/subspaces/claude_monet.pt,results/selected_ranks.csv
+car,Object,2,0.1857844889163971,15,20,27,35,147,results/spectrum_summary.csv,results/selected_ranks.csv
+airplane,Object,1,0.28575000166893005,12,18,26,33,147,results/subspaces/airplane.pt,results/selected_ranks.csv
+dog,Animal,1,0.1857720911502838,15,20,27,35,147,results/spectrum_summary.csv,results/selected_ranks.csv
+cat,Animal,2,0.18664784729480743,15,20,27,35,147,results/subspaces/cat.pt,results/selected_ranks.csv

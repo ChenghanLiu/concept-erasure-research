@@ -1,0 +1,9 @@
+Command: git diff --stat
+
+ experiments/adaptive_rank_experiment.ipynb | 11955 ++++++++++++++++++++++++++-
+ 1 file changed, 11954 insertions(+), 1 deletion(-)
+
+The notebook diff above existed before this reporting pass. Its SHA-256 is
+unchanged, as are all 48 protected files in source_snapshot.json.
+New files under results/reporting/ are untracked; ordinary git diff --stat
+does not include untracked additions. No staging or commits were performed.

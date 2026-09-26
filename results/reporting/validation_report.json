@@ -1,0 +1,83 @@
+{
+  "budget_rows": 6,
+  "cuda_initialized": false,
+  "cuda_visible_devices": "",
+  "existing_result_artifacts_inventoried": 20,
+  "figures": [
+    {
+      "dpi": [
+        299.9994,
+        299.9994
+      ],
+      "file": "fixed_vs_adaptive_by_concept.png",
+      "height": 1920,
+      "width": 3840
+    },
+    {
+      "dpi": [
+        299.9994,
+        299.9994
+      ],
+      "file": "preservation_budget_selection.png",
+      "height": 1740,
+      "width": 2820
+    },
+    {
+      "dpi": [
+        299.9994,
+        299.9994
+      ],
+      "file": "relative_improvement_by_concept.png",
+      "height": 1860,
+      "width": 3840
+    },
+    {
+      "dpi": [
+        299.9994,
+        299.9994
+      ],
+      "file": "style_rank_tradeoff_monet.png",
+      "height": 1680,
+      "width": 4020
+    },
+    {
+      "dpi": [
+        299.9994,
+        299.9994
+      ],
+      "file": "style_rank_tradeoff_van_gogh.png",
+      "height": 1680,
+      "width": 4020
+    }
+  ],
+  "gpu_experiments_launched": 0,
+  "independent_numeric_checks": 140,
+  "main_source_rows": 70,
+  "notebook_cells_executed": 0,
+  "precision_note": "Monet rounded aggregates checked at saved precision; no unavailable digits reconstructed",
+  "protected_files_unchanged": 48,
+  "rebuilt_artifacts_identical": [
+    "aggregate_results.csv",
+    "aggregate_results.md",
+    "car_limitation.md",
+    "data_inventory.csv",
+    "experiment_summary.md",
+    "figures/fixed_vs_adaptive_by_concept.png",
+    "figures/preservation_budget_selection.png",
+    "figures/relative_improvement_by_concept.png",
+    "figures/style_rank_tradeoff_monet.png",
+    "figures/style_rank_tradeoff_van_gogh.png",
+    "main_results.csv",
+    "main_results.md",
+    "notebook_evidence.json",
+    "paper_results_draft.md",
+    "preservation_budget_sensitivity.csv",
+    "preservation_budget_sensitivity.md",
+    "rank_selection.csv",
+    "rank_selection.md",
+    "style_tradeoff.csv",
+    "style_tradeoff.md"
+  ],
+  "status": "PASS",
+  "style_rows": 8
+}
