@@ -126,6 +126,13 @@ rewrite, or clear notebook cells.
 
 ## Reproduction
 
+For a small Docker demo with an image comparison or a read-only view of frozen
+results, see [demo/README.md](demo/README.md). The primary command is:
+
+```powershell
+docker compose exec concept-erasure python demo/run_demo.py --concept "Vincent van Gogh"
+```
+
 Inspect the plan without loading models, using a GPU, or creating output files:
 
 ```powershell
